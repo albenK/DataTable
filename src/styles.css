@@ -1,1 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+}
+
+.ForestTheme {
+    /* Start Font */
+    --FontFamily: 'DM Mono', 'Fira Code', monospace;
+    --FontSize: 1rem;
+    /* End Font */
+
+    /* Start Colors */
+    
+    --PaleSage: #f2f7f3;
+    --MutedGreen: #c9dece;
+    --LightSage: #e4ede6;
+    --SoftMint: #eaf2eb;
+    --MintTint: #e8f5ed;
+    --ForestGreen: #2d7a4f;
+    --Sage: #5a7a65;
+    --DeepForest: #1e3a2a;
+    --LightGreen: #a8c9b0;
+    --DarkGreen: #1E5032;
+
+    --DeepRed: #b91c1c;
+    --DarkerRed: #991b1b;
+    --PaleBlush: #fee2e2;
+    --Pink:#fecaca;
+    --VeryDarkRed: #7f1d1d;
+    --LightOpac: rgba(30, 80, 50, 0.07);
+
+    /* End Colors */
+}
+

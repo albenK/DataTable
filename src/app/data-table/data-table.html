@@ -1,0 +1,22 @@
+<div class="DataTableContainer">
+    <!-- <div class="VisualScollHint"></div> -->
+    <table class="Table">
+        <thead class="Header">
+            <tr class="HeaderRow">
+                @for (col of columns(); track trackCol(col, $index)) {
+                    <th class="HeaderCell">{{ col.label }}</th>
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+            @for (row of rows(); track trackRow(row, $index)) {
+                <tr class="DataRow">
+                    @for (col of columns(); track trackCol(col, $index)) {
+                        <td class="DataCell">{{ row[col.key] }}</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

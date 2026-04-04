@@ -1,0 +1,94 @@
+/* Start Table Container styles */
+.DataTableContainer {
+    border: var(--DataTableContainerBorder, 1px solid #c9dece);
+    border-radius: var(--DataTableContainerBorderRadius, 8px);
+    box-shadow: var(--DataTableContainerBoxShadow, 0 1px 3px rgba(30, 80, 50, 0.07));
+    height: var(--DataTableContainerHeight, auto);
+    max-width: var(--DataTableContainerMaxWidth, 1000px);
+    min-width: var(--DataTableContainerMinWidth, 300px);
+    overflow: auto;
+    padding: var(--DataTableContainerPadding, 0px 0px 10px 0px);
+    position: relative;
+    scrollbar-width: var(--DataTableContainerScrollbarWidth, thin);
+    scrollbar-color: var(--DataTableContainerScrollbarColor, #a8c9b0 transparent);
+    -webkit-overflow-scrolling: var(--DataTableContainerWebkitOverflowScrolling, touch);
+    width: var(--DataTableContainerWidth, 100%);
+}
+
+.DataTableContainer::-webkit-scrollbar {
+  height: var(--DataTableContainerWebkitScrollbarHeight, 6px);
+}
+
+.DataTableContainer::-webkit-scrollbar-track {
+    background: var(--DataTableContainerWebkitScrollbarTrackBg, transparent);
+}
+
+.DataTableContainer::-webkit-scrollbar-thumb {
+  background-color: var(--DataTableContainerWebkitScrollbarThumbBg, #a8c9b0);
+  border-radius: var(--DataTableContainerWebkitScrollbarBorderRadius, 9999px);
+}
+
+/* .DataTableContainer .VisualScollHint {
+    content: '';
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    bottom: 0%; 
+    width: var(--DataTableContainerScrollVisualHintWidth, 32px); 
+    pointer-events: none;
+    border-radius: var(--DataTableContainerScrollVisualHintBorderRadius, 0 8px 8px 0);
+    background: var(--DataTableContainerScrollVisualHintBg, linear-gradient(to right, transparent, rgba(255, 255, 255, 0.88)));
+    box-shadow: inset -10px 0 10px -5px rgba(0, 0, 0, 0.5);
+} */
+
+/* End Table Container styles */
+
+/* Start Table styles */
+.DataTableContainer .Table {
+    border-collapse: collapse;
+    font-family: var(--DataTableFontFamily, 'DM Mono', 'Fira Code', monospace);
+    font-size: var(--DataTableFontSize, 1rem);
+    table-layout: auto;
+    width: 100%;
+}
+
+/* Start Table Header styles */
+
+.DataTableContainer .Table .HeaderRow {
+    background: var(--DataTableHeaderRowBg, #f2f7f3);
+    border-bottom: var(--DataTableHeaderRowBorderBottom, 2px solid #c9dece);
+    position: sticky; /* Header row will remain at the top of container when scrolling up/down. */
+    top: 0%;
+}
+
+.DataTableContainer .Table .HeaderRow .HeaderCell {
+    padding: var(--DataTableHeaderCellPadding, 5px 5px);
+    text-align: var(--DataTableCellTextAlign, left);
+    font-weight: var(--DataTableHeaderCellFontWeight, 600);
+    font-size: var(--DataTableHeaderCellFontSize, 1rem);
+    letter-spacing: var(--DataTableHeaderCellLetterSpacing, 0.06em);
+    color: var(--DataTableHeaderCellColor, #5a7a65);
+    white-space: var(--DataTableHeaderCellWhiteSpace, nowrap);
+    user-select: var(--DataTableHeaderCellUserSelect, none);
+    position: var(--DataTaleHeaderCellPosition, relative);
+    transition: var(--DataTableHeaderCellTransition, background 0.15s ease, color 0.15s ease);
+}
+
+.DataTableContainer .Table .HeaderRow .HeaderCell.Sortable {
+    cursor: pointer;
+}
+
+.DataTableContainer .Table .HeaderRow .HeaderCell.Sortable:hover {
+    background: #eaf2eb;
+    color: #1e3a2a;
+}
+
+.DataTableContainer .Table .HeaderRow .HeaderCell.Sort_Asc, .DataTableContainer .Table .HeaderRow .HeaderCell.Sort_Desc {
+    background: #e8f5ed;
+    color: #2d7a4f;
+}
+
+/* End Table Header styles */
+
+
+/* End Table styles */

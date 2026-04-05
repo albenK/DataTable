@@ -2,6 +2,7 @@ import { Component, signal } from '@angular/core';
 // import { RouterOutlet } from '@angular/router';
 import { DataTable } from "./data-table/data-table";
 import { ColumnConfig } from './data-table/models/column-config';
+import { formatNumber } from '@angular/common';
 
 interface Employee {
   id: number;
@@ -14,7 +15,14 @@ interface Employee {
 const EMPLOYEE_TABLE_COLUMNS: Array<ColumnConfig<Employee>> = [
   { key: 'name', label: 'Name' },
   { key: 'department', label: 'Department' },
-  { key: 'salary', label: 'Salary' },
+  { 
+    key: 'salary',
+    label: 'Salary',
+    valueFormatter: (column, row) => {
+      const value: number = Number(row[column.key]) || 0;
+      return formatNumber(value, 'en-US');
+    } 
+  },
   { key: 'status', label: 'Status' },
 ];
 

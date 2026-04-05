@@ -11,6 +11,13 @@ export class DataTable<T> {
   columns = input<ColumnConfig<T>[]>([]);
   rows = input<T[]>([]);
 
+  getCellValue(col: ColumnConfig<T>, row: T) {
+    if (!!col.valueFormatter) {
+      return col.valueFormatter(col, row);
+    }
+    return row[col.key];
+  }
+
 
   trackCol(col: ColumnConfig<T>, index: number) {
     return `${String(col.key)} ${index}`;

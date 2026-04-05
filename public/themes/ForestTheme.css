@@ -1,0 +1,98 @@
+
+:root {
+    /* ── Base tokens ─────────────────────────────────────────────
+    All colors, radii, shadows, and typography are defined here
+    as CSS variables. Override any CSS variables within your component to customise the theme
+    without touching component styles.
+
+   ──────────────────────────────────────────────────────────── */
+
+   /* Primary colors */
+    --ColorPrimary: #2d7a4f;
+    --ColorPrimaryHover: #1f5c3a;
+    --ColorPrimaryTint: #e8f5ed;
+    --ColorPrimaryTintMid: #c9dece;
+    --ColorPrimaryMuted: #5a7a65;
+
+    /* ── Browns ──────────────────────────────────────────────── */
+    --ColorBark:             #6b4f3a;
+    --ColorSoil:             #5c3d2e;
+    --ColorDriftwood:        #a0785a;
+    --ColorDriftwoodHover:  #8b5e3c;
+    --ColorSandstone:        #c4a882;
+    --ColorMushroom:         #b09a85;
+    --ColorPeat:             #3d2b1f;
+
+    /* ── Danger / Error ──────────────────────────────────────── */
+    --ColorDanger:           #b91c1c;
+    --ColorDangerHover:     #991b1b;
+    --ColorDangerTint:      #fee2e2;
+    --ColorDangerTintMid:  #fecaca;
+    --ColorDangerText:      #7f1d1d;
+
+    /* ── Warning ─────────────────────────────────────────────── */
+    --ColorWarning:          #a0785a;
+    --ColorWarningHover:    #8b5e3c;
+    --ColorWarningTint:     #fdf4ec;
+    --ColorWarningTintMid: #c4a882;
+    --ColorWarningText:     #5c3d2e;
+
+    /* ── Backgrounds ─────────────────────────────────────────── */
+    --ColorBgPage:          #f0f4f1;
+    --ColorBgSurface:       #ffffff;
+    --ColorBgSubtle:        #f2f7f3;
+    --ColorBgHover:         #eaf2eb;
+
+    /* ── Text ────────────────────────────────────────────────── */
+    --ColorTextPrimary:     #1e3a2a;
+    --ColorTextSecondary:   #5a7a65;
+    --ColorTextMuted:       #a8c9b0;
+    --ColorTextHeading:     #14291e;
+    --ColorTextInverted:    #ffffff;
+
+    /* ── Borders ─────────────────────────────────────────────── */
+    --ColorBorder:           #c9dece;
+    --ColorBorderStrong:    #a8c9b0;
+    --ColorBorderSubtle:    #e4ede6;
+
+    /* ── Shadows ─────────────────────────────────────────────── */
+    --ShadowSm:    0 1px 3px rgba(30, 80, 50, 0.07);
+    --ShadowMd:    0 2px 12px rgba(30, 80, 50, 0.08);
+    --ShadowLg:    0 4px 24px rgba(30, 80, 50, 0.10);
+    --ShadowFocusPrimary:  0 0 0 3px rgba(45, 122, 79, 0.15);
+    --ShadowFocusDanger:  0 0 0 3px rgba(185, 28, 28, 0.12);
+    --ShadowFocusWarning: 0 0 0 3px rgba(160, 120, 90, 0.12);
+
+    /* ── Scrollbar ───────────────────────────────────────────── */
+    --ColorScrollbarThumb: #a8c9b0;
+
+    /* ── Border radius ───────────────────────────────────────── */
+    --RadiusSm:   4px;
+    --RadiusMd:   6px;
+    --RadiusLg:   8px;
+    --RadiusXl:   12px;
+    --RadiusFull: 9999px;
+
+    /* ── Typography ──────────────────────────────────────────── */
+    --FontSans:  'DM Sans', sans-serif;
+    --FontMono:  'DM Mono', 'Fira Code', monospace;
+
+    --TextXs:    0.7rem;
+    --TextSm:    0.8rem;
+    --TextBase:  0.875rem;
+    --TextMd:    1rem;
+    --TextLg:    1.25rem;
+
+    /* ── Spacing ─────────────────────────────────────────────── */
+    --Space1:  4px;
+    --Space2:  8px;
+    --Space3:  12px;
+    --Space4:  16px;
+    --Space5:  20px;
+    --Space6:  24px;
+    --Space8:  32px;
+
+    /* ── Transitions ─────────────────────────────────────────── */
+    --TransitionFast:   0.12s ease;
+    --TransitionBase:   0.15s ease;
+}

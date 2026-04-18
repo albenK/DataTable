@@ -1,13 +1,12 @@
 
 export interface ColumnConfig<T> {
+    dataCellStyles?: (column: ColumnConfig<T>, row: T, context: any) => Partial<CSSStyleDeclaration>;
+    headerCellStyles?: Partial<CSSStyleDeclaration>;
+    hide?: boolean;
     key: keyof T;
     label: string;
-    valueFormatter?(column: ColumnConfig<T>, row: T): string;
+    maxWidth?: number;
+    minWidth?: number;
+    // sortable?: boolean;
+    valueFormatter?(column: ColumnConfig<T>, row: T, context: any): string;
 }
-
-// export interface DefaultColumnConfig<T> {
-//     dataCellStyles?(): { [cssProp: string]: any; };
-//     headerCellStyles?(): { [cssProp: string]: any };
-//     hide?: boolean;
-//     sortable?: boolean;
-// }

@@ -3,7 +3,13 @@
         <thead class="Header">
             <tr class="HeaderRow">
                 @for (col of columns(); track trackCol(col, $index)) {
-                    <th class="HeaderCell">{{ col.label }}</th>
+                    <th
+                        [ngStyle]="col.headerCellStyles"
+                        class="HeaderCell"
+                        [style.minWidth]="typeof col.minWidth === 'number' ? col.minWidth: null"
+                        [style.maxWidth]="typeof col.maxWidth === 'number' ? col.maxWidth: null">
+                            {{ col.label }}
+                    </th>
                 }
             </tr>
         </thead>
@@ -12,7 +18,13 @@
             @for (row of rows(); track trackRow(row, $index)) {
                 <tr class="DataRow">
                     @for (col of columns(); track trackCol(col, $index)) {
-                        <td class="DataCell">{{ getCellValue(col, row) }}</td>
+                        <td
+                            [ngStyle]="getDataCellStyles(col, row)"
+                            class="DataCell"
+                            [style.minWidth]="typeof col.minWidth === 'number' ? col.minWidth: null"
+                            [style.maxWidth]="typeof col.maxWidth === 'number' ? col.maxWidth: null">
+                                {{ getCellValue(col, row) }}
+                        </td>
                     }
                 </tr>
             }

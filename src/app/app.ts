@@ -18,12 +18,24 @@ const EMPLOYEE_TABLE_COLUMNS: Array<ColumnConfig<Employee>> = [
   { 
     key: 'salary',
     label: 'Salary',
-    valueFormatter: (column, row) => {
+    valueFormatter: (column, row, context) => {
       const value: number = Number(row[column.key]) || 0;
       return formatNumber(value, 'en-US');
     } 
   },
-  { key: 'status', label: 'Status' },
+  {
+    dataCellStyles: (column, row, context) => {
+      const value = row.status || '';
+      if (value.toLowerCase() === 'inactive') {
+        return {
+          color: 'var(--ColorDanger)'
+        };
+      }
+      return {};
+    },
+    key: 'status',
+    label: 'Status'
+  },
 ];
 
 const EMPLOYEE_TABLE_ROWS: Employee[] = [
@@ -42,4 +54,8 @@ const EMPLOYEE_TABLE_ROWS: Employee[] = [
 export class App {
   columns = signal<ColumnConfig<Employee>[]>(EMPLOYEE_TABLE_COLUMNS);
   rows = signal<Employee[]>(EMPLOYEE_TABLE_ROWS);
+  defaultColumnConfig = {
+    minWidth: 90,
+    maxWidth: 300
+  };
 }

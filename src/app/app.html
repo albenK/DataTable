@@ -1,1 +1,6 @@
-<app-data-table [columns]="columns()" [rows]="rows()"/>
+<app-data-table
+    [columns]="columns()"
+    [context]="this"
+    [defaultColumnConfig]="defaultColumnConfig"
+    [rows]="rows()"
+/>

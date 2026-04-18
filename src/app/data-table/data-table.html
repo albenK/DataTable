@@ -2,13 +2,19 @@
     <table class="Table">
         <thead class="Header">
             <tr class="HeaderRow">
-                @for (col of columns(); track trackCol(col, $index)) {
+                @for (col of displayedColumns(); track trackCol(col, $index)) {
                     <th
                         [ngStyle]="col.headerCellStyles"
-                        class="HeaderCell"
-                        [style.minWidth]="typeof col.minWidth === 'number' ? col.minWidth: null"
-                        [style.maxWidth]="typeof col.maxWidth === 'number' ? col.maxWidth: null">
-                            {{ col.label }}
+                        [style.minWidth]="typeof col.minWidth === 'number' ? (col.minWidth + 'px'): null"
+                        [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
+                        class="HeaderCell">
+                            <span class="Content">
+                                <span class="Label">{{ col.label }}</span>
+                                <span class="SortIndicator" aria-hidden="true">
+                                    <span class="SortArrow SortArrow_Asc">▲</span>
+                                    <span class="SortArrow SortArrow_Desc">▼</span>
+                                </span>
+                            </span>
                     </th>
                 }
             </tr>
@@ -17,12 +23,12 @@
         <tbody>
             @for (row of rows(); track trackRow(row, $index)) {
                 <tr class="DataRow">
-                    @for (col of columns(); track trackCol(col, $index)) {
+                    @for (col of displayedColumns(); track trackCol(col, $index)) {
                         <td
                             [ngStyle]="getDataCellStyles(col, row)"
-                            class="DataCell"
-                            [style.minWidth]="typeof col.minWidth === 'number' ? col.minWidth: null"
-                            [style.maxWidth]="typeof col.maxWidth === 'number' ? col.maxWidth: null">
+                            [style.minWidth]="typeof col.minWidth === 'number' ? (col.minWidth + 'px'): null"
+                            [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
+                            class="DataCell">
                                 {{ getCellValue(col, row) }}
                         </td>
                     }

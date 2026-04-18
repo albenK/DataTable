@@ -13,15 +13,15 @@ interface Employee {
 }
 
 const EMPLOYEE_TABLE_COLUMNS: Array<ColumnConfig<Employee>> = [
-  { key: 'name', label: 'Name' },
+  { key: 'name', label: 'Name', minWidth: 60, maxWidth: 200 },
   { key: 'department', label: 'Department' },
-  { 
+  {
     key: 'salary',
     label: 'Salary',
     valueFormatter: (column, row, context) => {
       const value: number = Number(row[column.key]) || 0;
       return formatNumber(value, 'en-US');
-    } 
+    }
   },
   {
     dataCellStyles: (column, row, context) => {
@@ -54,8 +54,8 @@ const EMPLOYEE_TABLE_ROWS: Employee[] = [
 export class App {
   columns = signal<ColumnConfig<Employee>[]>(EMPLOYEE_TABLE_COLUMNS);
   rows = signal<Employee[]>(EMPLOYEE_TABLE_ROWS);
-  defaultColumnConfig = {
-    minWidth: 90,
-    maxWidth: 300
-  };
+  defaultColumnConfig = signal<Partial<ColumnConfig<Employee>>>({
+    maxWidth: 250,
+    minWidth: 60
+  });
 }

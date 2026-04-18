@@ -90,7 +90,7 @@
     line-height: 1;
 }
 
-.DataTableContainer .HeaderCell .sort-arrow { 
+.DataTableContainer .HeaderCell .SortArrow { 
     color: var(--ColorTextMuted);
     transition: color var(--TransitionBase); 
     font-size: 0.5rem;
@@ -122,10 +122,11 @@
 }
 
 .DataTableContainer .DataCell {
-  padding: var(--Space1) var(--Space1);
-  color: var(--ColorTextPrimary);
-  vertical-align: var(--TableDataCellVertAlign, middle);
-  white-space: var(--TableDataCellWhiteSpace, nowrap);
+    text-align: var(--TableCellTextAlign, left);
+    padding: var(--Space1) var(--Space1);
+    color: var(--ColorTextPrimary);
+    vertical-align: var(--TableDataCellVertAlign, middle);
+    white-space: var(--TableDataCellWhiteSpace, nowrap);
 }
 
 /* End table data row styling */

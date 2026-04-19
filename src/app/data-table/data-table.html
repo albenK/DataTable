@@ -21,11 +21,11 @@
         </thead>
 
         <tbody>
-            @for (row of rows(); track trackRow(row, $index)) {
+            @for (row of displayedRows(); track trackRow(row, $index)) {
                 <tr class="DataRow">
                     @for (col of displayedColumns(); track trackCol(col, $index)) {
                         <td
-                            [ngStyle]="getDataCellStyles(col, row)"
+                            [ngStyle]="row.styles[col.key]"
                             [style.minWidth]="typeof col.minWidth === 'number' ? (col.minWidth + 'px'): null"
                             [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
                             class="DataCell">

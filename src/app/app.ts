@@ -1,5 +1,4 @@
 import { Component, signal } from '@angular/core';
-// import { RouterOutlet } from '@angular/router';
 import { DataTable } from "./data-table/data-table";
 import { ColumnConfig } from './data-table/models/column-config';
 import { formatNumber } from '@angular/common';

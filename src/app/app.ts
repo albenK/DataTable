@@ -1,7 +1,8 @@
 import { Component, signal } from '@angular/core';
-import { DataTable } from "./data-table/data-table";
-import { ColumnConfig } from './data-table/models/column-config';
 import { formatNumber } from '@angular/common';
+
+import { DataTable } from "./data-table/data-table";
+import { ColumnConfig, SortDirections } from './data-table/models/column-config';
 
 interface Employee {
   id: number;
@@ -12,7 +13,7 @@ interface Employee {
 }
 
 const EMPLOYEE_TABLE_COLUMNS: Array<ColumnConfig<Employee>> = [
-  { key: 'name', label: 'Name', minWidth: 60, maxWidth: 200 },
+  { key: 'name', label: 'Name', sortDirection: SortDirections.ASC },
   { key: 'department', label: 'Department' },
   {
     key: 'salary',

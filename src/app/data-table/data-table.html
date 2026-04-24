@@ -8,7 +8,10 @@
                             [ngStyle]="col.headerCellStyles"
                             [style.minWidth]="typeof col.minWidth === 'number' ? (col.minWidth + 'px'): null"
                             [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
-                            class="HeaderCell">
+                            class="HeaderCell"
+                            [class.Sortable]="col.sortable"
+                            [class.Sort_Asc]="col.sortable && sortColumn === col && sortDirection === 'asc'"
+                            [class.Sort_Desc]="col.sortable && sortColumn === col && sortDirection === 'desc'">
                                 <span class="Content">
                                     <span class="Label">{{ col.label }}</span>
                                     <span class="SortIndicator" aria-hidden="true">

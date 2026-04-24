@@ -3,19 +3,21 @@
         <thead class="Header">
             <tr class="HeaderRow">
                 @for (col of displayedColumns(); track trackCol(col, $index)) {
-                    <th
-                        [ngStyle]="col.headerCellStyles"
-                        [style.minWidth]="typeof col.minWidth === 'number' ? (col.minWidth + 'px'): null"
-                        [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
-                        class="HeaderCell">
-                            <span class="Content">
-                                <span class="Label">{{ col.label }}</span>
-                                <span class="SortIndicator" aria-hidden="true">
-                                    <span class="SortArrow SortArrow_Asc">▲</span>
-                                    <span class="SortArrow SortArrow_Desc">▼</span>
+                    @if (!col.hide) {
+                        <th
+                            [ngStyle]="col.headerCellStyles"
+                            [style.minWidth]="typeof col.minWidth === 'number' ? (col.minWidth + 'px'): null"
+                            [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
+                            class="HeaderCell">
+                                <span class="Content">
+                                    <span class="Label">{{ col.label }}</span>
+                                    <span class="SortIndicator" aria-hidden="true">
+                                        <span class="SortArrow SortArrow_Asc">▲</span>
+                                        <span class="SortArrow SortArrow_Desc">▼</span>
+                                    </span>
                                 </span>
-                            </span>
-                    </th>
+                        </th>
+                    }
                 }
             </tr>
         </thead>
@@ -24,13 +26,15 @@
             @for (row of displayedRows(); track trackRow(row, $index)) {
                 <tr class="DataRow">
                     @for (col of displayedColumns(); track trackCol(col, $index)) {
-                        <td
-                            [ngStyle]="row.styles[col.key]"
-                            [style.minWidth]="typeof col.minWidth === 'number' ? (col.minWidth + 'px'): null"
-                            [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
-                            class="DataCell">
-                                {{ getCellValue(col, row) }}
-                        </td>
+                        @if (!col.hide) {
+                            <td
+                                [ngStyle]="row.styles[col.key]"
+                                [style.minWidth]="typeof col.minWidth === 'number' ? (col.minWidth + 'px'): null"
+                                [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
+                                class="DataCell">
+                                    {{ getCellValue(col, row) }}
+                            </td>
+                        }
                     }
                 </tr>
             }

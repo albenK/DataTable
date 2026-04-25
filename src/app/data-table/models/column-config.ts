@@ -1,7 +1,7 @@
 
 
 export interface ColumnConfig<T> {
-    dataCellStyles?: (column: ColumnConfig<T>, row: T, context: any) => Partial<CSSStyleDeclaration>;
+    dataCellStyles?: Partial<CSSStyleDeclaration> | ((column: ColumnConfig<T>, row: T, context: any) => Partial<CSSStyleDeclaration>);
     headerCellStyles?: Partial<CSSStyleDeclaration>;
     hide?: boolean;
     key: keyof T;
@@ -10,7 +10,7 @@ export interface ColumnConfig<T> {
     minWidth?: number;
     sortable?: boolean;
     sortDirection?: SortDirections;
-    sortComparator?(a: T, b: T, sortDirection: SortDirections): -1 | 0 | 1;
+    sortComparator?(a: T, b: T, sortByColumn: ColumnConfig<T>, sortDirection: SortDirections, context: any): number;
     valueFormatter?(column: ColumnConfig<T>, row: T, context: any): string;
 }
 

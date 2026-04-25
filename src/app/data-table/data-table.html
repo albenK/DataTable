@@ -10,8 +10,8 @@
                             [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
                             class="HeaderCell"
                             [class.Sortable]="col.sortable"
-                            [class.Sort_Asc]="col.sortable && sortColumn === col && sortDirection === 'asc'"
-                            [class.Sort_Desc]="col.sortable && sortColumn === col && sortDirection === 'desc'">
+                            [class.Sort_Asc]="col.sortable && sortByColumn === col && sortDirection === 'asc'"
+                            [class.Sort_Desc]="col.sortable && sortByColumn === col && sortDirection === 'desc'">
                                 <span class="Content">
                                     <span class="Label">{{ col.label }}</span>
                                     <span class="SortIndicator" aria-hidden="true">

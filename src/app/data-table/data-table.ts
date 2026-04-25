@@ -27,14 +27,14 @@ export class DataTable<T> {
 
   // Local variables
   sortDirection: SortDirections | null = null; // asc or desc
-  sortColumn: ColumnConfig<T> | null = null; // column we're sorting by.
+  sortByColumn: ColumnConfig<T> | null = null; // column we're sorting by.
 
   constructor() { }
 
   displayedColumns = computed(() => {
     const allColumns = this.columns();
     const defaultColConfig = this.defaultColumnConfig();
-    this.sortColumn = null;
+    this.sortByColumn = null;
     this.sortDirection = null;
     let sortCol!: ColumnConfig<T>;
     const cols = allColumns.map((col) => {
@@ -50,25 +50,58 @@ export class DataTable<T> {
     });
 
     if (!!sortCol) {
-      this.sortColumn = sortCol;
-      this.sortDirection = this.sortColumn.sortDirection || null;
+      this.sortByColumn = sortCol;
+      this.sortDirection = this.sortByColumn.sortDirection || null;
     }
     return cols;
   });
 
-  // sortedRows = computed(() => {
-  //   const rows = [ ...this.rows() ];
-  //   if (!this.sortColumn || !this.sortDirection) {
-  //     return [ ...rows ];
-  //   }
-
-  //   return rows.sort((a, b) => {
-  //     return -1;
-  //   });
-  // });
-
   displayedRows = computed(() => {
-    return this.rows().map((row) => {
+    const rows = [ ...this.rows()];
+
+    // if there is no column to sort by...
+    if (!this.sortByColumn || !this.sortDirection) {
+      return this.mapedRows(rows); // return all rows.
+    }
+    // Else, we can sort since both sortByColumn and sortDirection exist.
+    const sortedRows = rows.sort((a, b) => {
+      if (!!this.sortByColumn && !!this.sortByColumn.sortComparator) {
+        return this.sortByColumn.sortComparator(a, b, this.sortByColumn, this.sortDirection!, this.context);
+      }
+      return this.defaultSortComparator(a, b, this.sortByColumn!, this.sortDirection!);
+    });
+    return this.mapedRows(sortedRows);
+  });
+
+  defaultSortComparator(a: T, b: T, sortByColumn: ColumnConfig<T>, sortDirection: SortDirections): number {
+    const valueA: any = a[sortByColumn.key];
+    const valueB: any = b[sortByColumn.key];
+    const isANullOrUndefined: boolean = valueA === null || valueA === undefined;
+    const isBNullOrUndefined: boolean = valueB === null || valueB === undefined;
+    if (isANullOrUndefined && isBNullOrUndefined) {
+      return 0;
+    }
+    const dir = sortDirection === SortDirections.ASC ? 1 : -1;
+    if (isANullOrUndefined) {
+      // row for valueB should appear first if asc. Otherwise it should be 2nd.
+      return 1 * dir;
+    }
+    if (isBNullOrUndefined) {
+      // row for valueA should appear first if asc. Otherwise it should be 2nd.
+      return -1 * dir;
+    }
+    if (typeof valueA === 'string' && typeof valueB === 'string') {
+      const localCompare: number = valueA.localeCompare(valueB);
+      return localCompare * dir;
+    }
+    if (typeof valueA === 'number' && typeof valueB === 'number') {
+      return (valueA - valueB) * dir;
+    }
+    return String(valueA).localeCompare(String(valueB)) * dir;
+  }
+
+  mapedRows(rows: T[]): TableRow<T>[] {
+    return rows.map((row) => {
       const styles = Object.fromEntries(
         this.displayedColumns()
           .filter((col) => {
@@ -76,9 +109,10 @@ export class DataTable<T> {
           })
           .map((col) => {
             if (!!col.dataCellStyles) {
+              const cellStyles = typeof col.dataCellStyles === 'function' ? col.dataCellStyles(col, row, this.context): col.dataCellStyles;
               return [
                 col.key,
-                col.dataCellStyles && col.dataCellStyles(col, row, this.context)
+                cellStyles
               ];
             }
             return [];
@@ -90,7 +124,7 @@ export class DataTable<T> {
       };
       return tableRow;
     });
-  });
+  }
 
   getCellValue(col: ColumnConfig<T>, tableRow: TableRow<T>) {
     if (!!col.valueFormatter) {

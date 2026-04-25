@@ -39,10 +39,10 @@ const EMPLOYEE_TABLE_COLUMNS: Array<ColumnConfig<Employee>> = [
 ];
 
 const EMPLOYEE_TABLE_ROWS: Employee[] = [
-  { id: 1, name: 'Alice Nguyen', department: 'Engineering', salary: 120000, status: 'active' },
+  { id: 4, name: 'David Park', department: 'Marketing', salary: 87000, status: 'active' },
   { id: 2, name: 'Bob Martínez', department: 'Design', salary: 95000, status: 'active' },
   { id: 3, name: 'Carol Smith', department: 'Engineering', salary: 135000, status: 'inactive' },
-  { id: 4, name: 'David Park', department: 'Marketing', salary: 87000, status: 'active' },
+  { id: 1, name: 'Alice Nguyen', department: 'Engineering', salary: 120000, status: 'active' },
 ];
 
 @Component({

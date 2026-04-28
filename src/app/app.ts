@@ -13,7 +13,7 @@ interface Employee {
 }
 
 const EMPLOYEE_TABLE_COLUMNS: Array<ColumnConfig<Employee>> = [
-  { key: 'name', label: 'Name', sortDirection: SortDirections.ASC },
+  { key: 'name', label: 'Name', },
   { key: 'department', label: 'Department' },
   {
     key: 'salary',

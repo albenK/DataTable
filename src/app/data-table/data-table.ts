@@ -126,6 +126,43 @@ export class DataTable<T> {
     });
   }
 
+  onSortClick(col: ColumnConfig<T>) {
+    if (this.sortByColumn === col) {
+      if (this.sortDirection === SortDirections.ASC) {
+        this.sortDirection = SortDirections.DESC;
+      }
+      else {
+        this.sortByColumn = null;
+        this.sortDirection = null;
+      }
+    }
+    else {
+      this.sortByColumn = col;
+      this.sortDirection = SortDirections.ASC;
+    }
+    /* TODO: Implement a way to update displayedRows computed signal.
+      Maybe add a new signal called "refreshDisplayedRows<boolean>" to trigger
+      an update for displayedRows. This signal could be a dependency of displayedRows.
+      Example: 
+        displayedRows = computed(() => {
+          const rows = [ ...this.rows() ];
+          this.refreshDisplayedRows(); // just call it to register as dependency of displayedRows. Don't care for actual value.
+          ...remaining logic
+        });
+
+
+        onSortClick(col) {
+          ...update this.sortByColumn and this.sortDirection
+
+          ...after updating this.sortByColumn and this.sortDirection, trigger an update
+          this.refreshDisplayedRows.update(v => !v); // toggle boolean value.
+        }
+
+        Another way is to change sortDirection and sortByColumn as signals and use them in displayedRows and
+        displayedColumns. Could be tricky...
+    */
+  }
+
   getCellValue(col: ColumnConfig<T>, tableRow: TableRow<T>) {
     if (!!col.valueFormatter) {
       return col.valueFormatter(col, tableRow.data, this.context);

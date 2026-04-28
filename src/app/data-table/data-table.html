@@ -11,7 +11,8 @@
                             class="HeaderCell"
                             [class.Sortable]="col.sortable"
                             [class.Sort_Asc]="col.sortable && sortByColumn === col && sortDirection === 'asc'"
-                            [class.Sort_Desc]="col.sortable && sortByColumn === col && sortDirection === 'desc'">
+                            [class.Sort_Desc]="col.sortable && sortByColumn === col && sortDirection === 'desc'"
+                            (click)="col.sortable && onSortClick(col)">
                                 <span class="Content">
                                     <span class="Label">{{ col.label }}</span>
                                     <span class="SortIndicator" aria-hidden="true">

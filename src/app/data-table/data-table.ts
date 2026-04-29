@@ -1,8 +1,8 @@
-import { Component, input, computed, Input, signal } from '@angular/core';
+import { Component, input, computed, Input, signal, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ColumnConfig, SortDirections } from './models/column-config';
-import { TableRow } from './models/table-row';
+import { DataTableRowSelectable, RowClickEvent, TableRow } from './models/table-row';
 
 @Component({
   selector: 'app-data-table',
@@ -24,6 +24,10 @@ export class DataTable<T> {
 
   // Normal @Inputs()
   @Input() context: any = undefined;
+  @Input() rowSelectable!: DataTableRowSelectable<T>;
+
+  // Outputs
+  onRowClick = output<RowClickEvent<T>>();
 
   // Local variables
   sortDirection: SortDirections | null = null; // asc or desc
@@ -121,8 +125,10 @@ export class DataTable<T> {
             return [];
           })
       );
+      const selectable = !!this.rowSelectable ? this.rowSelectable.isRowSelectable(row, this.context): false;
       const tableRow: TableRow<T> = {
         data: row,
+        selectable: selectable,
         styles: styles
       };
       return tableRow;
@@ -148,6 +154,15 @@ export class DataTable<T> {
       this.sortDirection = SortDirections.ASC;
     }
     this.refreshDisplayedRows();
+  }
+
+  rowClickHandler(row: TableRow<T>, col: ColumnConfig<T>, event: MouseEvent) {
+    this.onRowClick.emit({
+      column: col,
+      context: this.context,
+      mouseEvent: event,
+      row: row.data
+    });
   }
 
   getCellValue(col: ColumnConfig<T>, tableRow: TableRow<T>) {

@@ -28,14 +28,15 @@
 
         <tbody>
             @for (row of displayedRows(); track trackRow(row, $index)) {
-                <tr class="DataRow">
+                <tr class="DataRow" [class.Selectable]="row.selectable">
                     @for (col of displayedColumns(); track trackCol(col, $index)) {
                         @if (!col.hide) {
                             <td
                                 [ngStyle]="row.styles[col.key]"
                                 [style.minWidth]="typeof col.minWidth === 'number' ? (col.minWidth + 'px'): null"
                                 [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
-                                class="DataCell">
+                                class="DataCell"
+                                (click)="row.selectable && rowClickHandler(row, col, $event)">
                                     {{ getCellValue(col, row) }}
                             </td>
                         }

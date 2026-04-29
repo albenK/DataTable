@@ -2,7 +2,8 @@ import { Component, signal } from '@angular/core';
 import { formatNumber } from '@angular/common';
 
 import { DataTable } from "./data-table/data-table";
-import { ColumnConfig, SortDirections } from './data-table/models/column-config';
+import { ColumnConfig } from './data-table/models/column-config';
+import { DataTableRowSelectable, RowClickEvent } from './data-table/models/table-row';
 
 interface Employee {
   id: number;
@@ -51,11 +52,19 @@ const EMPLOYEE_TABLE_ROWS: Employee[] = [
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements DataTableRowSelectable<Employee> {
   columns = signal<ColumnConfig<Employee>[]>(EMPLOYEE_TABLE_COLUMNS);
   rows = signal<Employee[]>(EMPLOYEE_TABLE_ROWS);
   defaultColumnConfig = signal<Partial<ColumnConfig<Employee>>>({
     maxWidth: 250,
     minWidth: 60
   });
+
+  isRowSelectable(row: Employee, context: any): boolean {
+    return true; // all rows are selectable.
+  }
+
+  onRowClick(event: RowClickEvent<Employee>) {
+    console.log(event);
+  }
 }

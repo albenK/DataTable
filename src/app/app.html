@@ -3,4 +3,6 @@
     [context]="this"
     [defaultColumnConfig]="defaultColumnConfig()"
     [rows]="rows()"
+    [rowSelectable]="this"
+    (onRowClick)="onRowClick($event)"
 />

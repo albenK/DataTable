@@ -121,6 +121,10 @@
     background: var(--ColorBgHover);
 }
 
+.DataTableContainer .DataRow.Selectable {
+    cursor: pointer;
+}
+
 .DataTableContainer .DataCell {
     text-align: var(--TableCellTextAlign, left);
     padding: var(--Space1) var(--Space1);

@@ -1,4 +1,4 @@
-import { Component, input, computed, Input } from '@angular/core';
+import { Component, input, computed, Input, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ColumnConfig, SortDirections } from './models/column-config';
@@ -29,6 +29,8 @@ export class DataTable<T> {
   sortDirection: SortDirections | null = null; // asc or desc
   sortByColumn: ColumnConfig<T> | null = null; // column we're sorting by.
 
+  private _refreshDisplayedRows = signal<boolean>(false);
+
   constructor() { }
 
   displayedColumns = computed(() => {
@@ -58,6 +60,7 @@ export class DataTable<T> {
 
   displayedRows = computed(() => {
     const rows = [ ...this.rows()];
+    this._refreshDisplayedRows();
 
     // if there is no column to sort by...
     if (!this.sortByColumn || !this.sortDirection) {
@@ -126,6 +129,10 @@ export class DataTable<T> {
     });
   }
 
+  refreshDisplayedRows() {
+    this._refreshDisplayedRows.update(v => !v);
+  }
+
   onSortClick(col: ColumnConfig<T>) {
     if (this.sortByColumn === col) {
       if (this.sortDirection === SortDirections.ASC) {
@@ -140,27 +147,7 @@ export class DataTable<T> {
       this.sortByColumn = col;
       this.sortDirection = SortDirections.ASC;
     }
-    /* TODO: Implement a way to update displayedRows computed signal.
-      Maybe add a new signal called "refreshDisplayedRows<boolean>" to trigger
-      an update for displayedRows. This signal could be a dependency of displayedRows.
-      Example: 
-        displayedRows = computed(() => {
-          const rows = [ ...this.rows() ];
-          this.refreshDisplayedRows(); // just call it to register as dependency of displayedRows. Don't care for actual value.
-          ...remaining logic
-        });
-
-
-        onSortClick(col) {
-          ...update this.sortByColumn and this.sortDirection
-
-          ...after updating this.sortByColumn and this.sortDirection, trigger an update
-          this.refreshDisplayedRows.update(v => !v); // toggle boolean value.
-        }
-
-        Another way is to change sortDirection and sortByColumn as signals and use them in displayedRows and
-        displayedColumns. Could be tricky...
-    */
+    this.refreshDisplayedRows();
   }
 
   getCellValue(col: ColumnConfig<T>, tableRow: TableRow<T>) {

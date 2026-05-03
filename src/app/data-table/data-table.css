@@ -114,15 +114,19 @@
 }
 
 .DataTableContainer .DataRow:last-child { 
-    border-bottom: none; 
+    border-bottom: none;
 }
 
-.DataTableContainer .DataRow:hover { 
+.DataTableContainer .DataRow:hover {
     background: var(--ColorBgHover);
 }
 
 .DataTableContainer .DataRow.Selectable {
     cursor: pointer;
+}
+
+.DataTableContainer .DataRow.Selectable.Selected {
+    background-color: var(--SelectedRowBgColor, var(--ColorPrimaryMuted));
 }
 
 .DataTableContainer .DataCell {
@@ -131,6 +135,10 @@
     color: var(--ColorTextPrimary);
     vertical-align: var(--TableDataCellVertAlign, middle);
     white-space: var(--TableDataCellWhiteSpace, nowrap);
+}
+
+.DataTableContainer .DataRow.Selectable.Selected .DataCell {
+    color: var(--SelectedRowFontColor, #fff);
 }
 
 /* End table data row styling */

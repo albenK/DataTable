@@ -28,7 +28,7 @@
 
         <tbody>
             @for (row of displayedRows(); track trackRow(row, $index)) {
-                <tr class="DataRow" [class.Selectable]="row.selectable">
+                <tr class="DataRow" [class.Selectable]="row.selectable" [class.Selected]="row.selectable && row.selected">
                     @for (col of displayedColumns(); track trackCol(col, $index)) {
                         @if (!col.hide) {
                             <td

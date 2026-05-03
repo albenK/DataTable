@@ -3,6 +3,7 @@
     [context]="this"
     [defaultColumnConfig]="defaultColumnConfig()"
     [rows]="rows()"
-    [rowSelectable]="this"
+    [rowSelectable]="employeeTableRowSelect"
+    [rowSelected]="employeeTableRowSelect"
     (onRowClick)="onRowClick($event)"
 />

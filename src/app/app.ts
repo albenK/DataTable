@@ -3,7 +3,7 @@ import { formatNumber } from '@angular/common';
 
 import { DataTable } from "./data-table/data-table";
 import { ColumnConfig } from './data-table/models/column-config';
-import { DataTableRowSelectable, RowClickEvent } from './data-table/models/table-row';
+import { DataTableRowSelectable, DataTableRowSelected, RowClickEvent } from './data-table/models/table-row';
 
 interface Employee {
   id: number;
@@ -25,9 +25,9 @@ const EMPLOYEE_TABLE_COLUMNS: Array<ColumnConfig<Employee>> = [
     }
   },
   {
-    dataCellStyles: (column, row, context) => {
+    dataCellStyles: (column, row, isRowSelectable, isRowSelected, context) => {
       const value = row.status || '';
-      if (value.toLowerCase() === 'inactive') {
+      if (value.toLowerCase() === 'inactive' && !isRowSelected) {
         return {
           color: 'var(--ColorDanger)'
         };
@@ -46,25 +46,41 @@ const EMPLOYEE_TABLE_ROWS: Employee[] = [
   { id: 1, name: 'Alice Nguyen', department: 'Engineering', salary: 120000, status: 'active' },
 ];
 
+class EmployeeRowSelect implements DataTableRowSelectable<Employee>, DataTableRowSelected<Employee> {
+  compRef: App;
+  constructor(parentComp: App) { 
+    this.compRef = parentComp;
+  }
+
+  isRowSelectable(row: Employee, context: any): boolean {
+    return true; // all rows are selectable.
+  }
+
+  isRowSelected(row: Employee, context: any): boolean {
+    return false; // No row is selected. User may click on a row and select it, if it's selectable.
+  }
+}
+
 @Component({
   selector: 'app-root',
   imports: [DataTable],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements DataTableRowSelectable<Employee> {
+export class App {
   columns = signal<ColumnConfig<Employee>[]>(EMPLOYEE_TABLE_COLUMNS);
   rows = signal<Employee[]>(EMPLOYEE_TABLE_ROWS);
   defaultColumnConfig = signal<Partial<ColumnConfig<Employee>>>({
     maxWidth: 250,
     minWidth: 60
   });
+  employeeTableRowSelect = new EmployeeRowSelect(this);
 
-  isRowSelectable(row: Employee, context: any): boolean {
-    return true; // all rows are selectable.
-  }
 
   onRowClick(event: RowClickEvent<Employee>) {
     console.log(event);
+    // TODO: Won't work because of isRowSelected(). Maybe just pass in TableRow[] as rows input. This
+    // way we can just leave it to the parent comp to set selectable, selected and styles.
+    event.gridApi.selectRow(event.row);
   }
 }

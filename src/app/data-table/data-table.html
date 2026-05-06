@@ -28,7 +28,7 @@
 
         <tbody>
             @for (row of displayedRows(); track trackRow(row, $index)) {
-                <tr class="DataRow" [class.Selectable]="row.selectable" [class.Selected]="row.selectable && row.selected">
+                <tr class="DataRow" [class.Selectable]="!!rowSelectable && rowSelectable.rowSelectable(row.data, context, gridApi)" [class.Selected]="!!rowSelectable && rowSelectable.rowSelectable(row.data, context, gridApi) && gridApi.rowSelected(row.data)">
                     @for (col of displayedColumns(); track trackCol(col, $index)) {
                         @if (!col.hide) {
                             <td
@@ -36,7 +36,7 @@
                                 [style.minWidth]="typeof col.minWidth === 'number' ? (col.minWidth + 'px'): null"
                                 [style.maxWidth]="typeof col.maxWidth === 'number' ? (col.maxWidth + 'px'): null"
                                 class="DataCell"
-                                (click)="row.selectable && rowClickHandler(row, col, $event)">
+                                (click)="rowClickHandler(row, col, $event)">
                                     {{ getCellValue(col, row) }}
                             </td>
                         }

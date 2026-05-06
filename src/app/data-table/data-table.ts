@@ -2,7 +2,7 @@ import { Component, input, computed, Input, signal, output } from '@angular/core
 import { CommonModule } from '@angular/common';
 
 import { ColumnConfig, SortDirections } from './models/column-config';
-import { DataTableRowSelectable, DataTableRowSelected, RowClickEvent, TableRow } from './models/table-row';
+import { DataTableRowSelectable, RowClickEvent, TableRow } from './models/table-row';
 import { GridApi } from './models/grid-api';
 
 @Component({
@@ -26,7 +26,6 @@ export class DataTable<T> {
   // Normal @Inputs()
   @Input() context: any = undefined;
   @Input() rowSelectable!: DataTableRowSelectable<T>;
-  @Input() rowSelected!: DataTableRowSelected<T>;
 
   // Outputs
   onRowClick = output<RowClickEvent<T>>();
@@ -46,7 +45,8 @@ export class DataTable<T> {
     this.sortByColumn = null;
     this.sortDirection = null;
     let sortCol!: ColumnConfig<T>;
-    const cols = allColumns.map((col) => {
+    const visibleCols = allColumns.filter(c => !c.hide);
+    const cols = visibleCols.map((col) => {
       const merged: ColumnConfig<T> = {
         ...this.DEFAULT_COLUMN_CONFIG,
         ...defaultColConfig,
@@ -114,14 +114,14 @@ export class DataTable<T> {
     const columns = this.displayedColumns();
     const columnsWithDataCellStyle = columns.filter(col => !!col.key && !!col.dataCellStyles);
     return rows.map((row) => {
-      const selectable = !!this.rowSelectable ? this.rowSelectable.isRowSelectable(row, this.context): false;
-      const selected: boolean = selectable && (!!this.rowSelected ? this.rowSelected.isRowSelected(row, this.context): false);
+      const selectable = !!this.rowSelectable ? this.rowSelectable.rowSelectable(row, this.context, this.gridApi): false;
+      const selected: boolean = selectable && this.gridApi.rowSelected(row);
       
       const styles = Object.fromEntries(
         columnsWithDataCellStyle
           .map((col) => {
             if (!!col.dataCellStyles) {
-              const cellStyles = typeof col.dataCellStyles === 'function' ? col.dataCellStyles(col, row, selectable, selected, this.context): col.dataCellStyles;
+              const cellStyles = typeof col.dataCellStyles === 'function' ? col.dataCellStyles(col, row, selectable, selected, this.context, this.gridApi): col.dataCellStyles;
               return [
                 col.key,
                 cellStyles
@@ -133,8 +133,6 @@ export class DataTable<T> {
 
       const tableRow: TableRow<T> = {
         data: row,
-        selectable: selectable,
-        selected: selected,
         styles: styles
       };
       return tableRow;
@@ -163,6 +161,10 @@ export class DataTable<T> {
   }
 
   rowClickHandler(row: TableRow<T>, col: ColumnConfig<T>, event: MouseEvent) {
+    const selectable = !!this.rowSelectable && this.rowSelectable.rowSelectable(row.data, this.context, this.gridApi);
+    if (!selectable) {
+      return;
+    }
     this.onRowClick.emit({
       column: col,
       context: this.context,

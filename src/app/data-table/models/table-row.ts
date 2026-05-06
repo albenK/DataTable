@@ -4,17 +4,10 @@ import { GridApi } from "./grid-api";
 export interface TableRow<T> {
     data: T;
     styles: Record<keyof T, Partial<CSSStyleDeclaration>>;
-    // selectedStyles: Record<keyof T, Partial<CSSStyleDeclaration>>;
-    selectable: boolean;
-    selected: boolean;
 }
 
 export interface DataTableRowSelectable<T> {
-    isRowSelectable(row: T, context: any): boolean;
-}
-
-export interface DataTableRowSelected<T> {
-    isRowSelected(row: T, context: any): boolean;
+    rowSelectable(row: T, context: any, gridApi: GridApi<T>): boolean;
 }
 
 export interface RowClickEvent<T> {
